@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 import pandas as pd
 
+
 app = FastAPI( title="Películas y Series")
 
 @app.get ("/")
 async def read_root():
-    return {"Hello":
-            "World!"}
+    return {"******* Hola, Mi nombre es Milton!! Este es mi Proyecto Nª 1 para Henry. ******"}
 
 
 #Consultas
@@ -16,8 +16,8 @@ async def read_root():
  peliculas/series, por plataforma.
 '''
 @app.get("/get_word_count")
-async def get_word_count(plataforma: str, keyword: str):
-    movie_df=pd.read_csv('pelis_score.csv')
+def get_word_count(plataforma: str, keyword: str):
+    movie_df=pd.read_csv('pelis_score')
     #pasamos las entradas a minúsculas
     plataforma =plataforma.lower()
     keyword=keyword.lower()
@@ -32,5 +32,4 @@ async def get_word_count(plataforma: str, keyword: str):
     for title in titles:
         count += title.count(keyword)
     return f"La keyword '{keyword}' aparece {count} veces en los títulos de películas y series de la plataforma {plataforma}."
-
 
