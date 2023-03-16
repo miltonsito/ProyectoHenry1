@@ -30,8 +30,8 @@ def get_max_duration(year: int, platform: str, duration_type: str):
 
     # Encontrar la película con mayor duración en el dataframe filtrado
     max_duration = filtered_movies['duration_int'].max()
-    max_duration_movie = filtered_df[filtered_df.Duration == filtered_df.Duration.max()].iloc[0]
+    max_duration_movie = filtered_movies[filtered_movies['duration_int'] == max_duration].iloc[0]
 
     # Devolver el título de la película con mayor duración y su duración
-    return {"title": max_duration_movie["title"], "duration": max_duration_movie["duration_int"]}
+    return {"title": max_duration_movie["title"], "duration_int": max_duration_movie["duration_int"]}
 
