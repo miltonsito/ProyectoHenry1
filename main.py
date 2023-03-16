@@ -27,9 +27,11 @@ async def get_max_duration(year: int, platform: str, duration_type: str):
     # 4. Filtro de mayor duracion
     max_duracion = filtro_tipo_duracion.loc[ filtro_tipo_duracion['duration_int'] == filtro_tipo_duracion['duration_int'].max() ]
     
+    max_duracion_movie = max_duracion.iloc[0]
     movie_max_duracion = max_duracion['title']
+    max_duracion_duration = max_duracion_movie['duration_int']
 
-    return movie_max_duracion
-
+    
+    return {"title": max_duracion_title, "duration_int": max_duracion_duration}
 
 
