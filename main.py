@@ -5,7 +5,7 @@ app = FastAPI(title="Películas y Series")
 
 @app.get("/")
 async def read_root():
-    return {"message": "Hola, este es mi proyecto Nº 1 para Henry!"}
+     return {"******* Hola, Mi nombre es Milton!! Este es mi Proyecto Nº 1 para Henry. ******"}
 
 
 @app.get("/get_max_duration")
@@ -19,7 +19,7 @@ async def get_max_duration(year: int, platform: str, duration_type: str):
 
     # 2. Filtro por plataforma
     # a: amazon, d: disney, h: hulu, n: netflix
-    filtro_plataforma = filtro_anio.loc[ filtro_anio["platform"] == platform ]
+    filtro_plataforma = filtro_anio.loc[ filtro_anio['platform'] == platform ]
 
     # 3. Filtro por tipo de duracion
     filtro_tipo_duracion = filtro_plataforma.loc[ filtro_plataforma['duration_type'] == duration_type ]
