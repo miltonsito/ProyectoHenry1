@@ -18,15 +18,15 @@ Película con mayor duración con filtros opcionales de AÑO, PLATAFORMA Y TIPO 
 # Película con mayor duración con filtros opcionales de AÑO, PLATAFORMA Y TIPO DE DURACIÓN
 @app.get("/get_max_duration")
 def get_max_duration(year: int, platform: str, duration_type: str):
-    movie_df=pd.read_csv('pelis_score1.csv')
+    movie_df=pd.read_csv('pelis_score.or.csv')
     # Filtrar los datos según los parámetros recibidos
     filtered_df = movie_df.copy()
     if year:
-        filtered_df = filtered_df[filtered_df.Year == year]
+        filtered_df = filtered_df[filtered_df.Year["year"]== year]
     if platform:
-        filtered_df = filtered_df[filtered_df.Platform == platform]
+        filtered_df = filtered_df[filtered_df.Platform["plataform"] == platform]
     if duration_type:
-        filtered_df = filtered_df[filtered_df.Duration == duration_type]
+        filtered_df = filtered_df[filtered_df.Duration["duration_type"] == duration_type]
 
     # Encontrar la película con mayor duración en el dataframe filtrado
     max_duration_movie = filtered_df[filtered_df.Duration == filtered_df.Duration.max()].iloc[0]
