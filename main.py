@@ -6,10 +6,10 @@ app = FastAPI(title="Películas y Series")
 @app.get("/")
 async def read_root():
      return {"******* Hola, Mi nombre es Milton!! Este es mi Proyecto Nº 1 para Henry. ******"}
-
-#Película con mayor duración con filtros opcionales de 
-#AÑO, PLATAFORMA Y TIPO DE DURACIÓN.
-
+'''
+Película con mayor duración con filtros opcionales de 
+AÑO, PLATAFORMA Y TIPO DE DURACIÓN.
+'''
 
 @app.get("/get_max_duration")
 async def get_max_duration(year: int, platform: str, duration_type: str):
@@ -21,7 +21,8 @@ async def get_max_duration(year: int, platform: str, duration_type: str):
                          (df["platform"] == platform if platform else True) &
                          (df["duration_type"] == duration_type if duration_type else True)]
 
-    # Encontrar la película con la mayor duración
+ #Encontrar la película con la mayor duración
+     
     max_duration_movie = filtered_df.loc[filtered_df["duration_int"].idxmax()]
 
     return max_duration_movie["title"]
