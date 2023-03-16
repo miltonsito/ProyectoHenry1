@@ -1,19 +1,36 @@
 from fastapi import FastAPI
 import pandas as pd
 
+app = FastAPI( title="Películas y Series")
 
-app = FastAPI( title="Películas y Series",
-    description="Esta API permite realizar consultas de diferentes plataformas",
-    version='0.0.1')
+@app.get ("/")
+async def read_root():
+    return {"Hello":
+            "World!"}
 
-pelis_series = pd.read_csv("movies_datos.csv")
-rating_score = pd.read_csv("rating_score.csv")
 
-@app.get("/")
-def index():
-    return "Este es el Proyecto Individual Nº 1"
+#Consultas
 
-@app.get("/max_duration_movie")
-def max_duration_movie(year: int = None, platform: str = None, duration_type: str = None):
-    return {"data": get_max_duration(year, platform, duration_type)}
+'''
+1. Cantidad de veces que aparece una keyword en el título de
+ peliculas/series, por plataforma.
+'''
+@app.get("/get_word_count")
+async def get_word_count(plataforma: str, keyword: str):
+    movie_df=pd.read_csv('movies.csv')
+    #pasamos las entradas a minúsculas
+    plataforma =plataforma.lower()
+    keyword=keyword.lower()
+    #creamos la columna 'platform' 
+    movie_df['platform']=movie_df['id'].str[0]
+    #filtramos por plataforma
+    platform_df = movie_df[movie_df['platform'] == plataforma[0]]
+    #extramos los titulos en dicha plataforma 
+    titles = platform_df['title']
+    #luego iteramos a través de los títulos de las filas filtradas
+    count = 0
+    for title in titles:
+        count += title.count(keyword)
+    return f"La keyword '{keyword}' aparece {count} veces en los títulos de películas y series de la plataforma {plataforma}."
+
 
