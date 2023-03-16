@@ -22,7 +22,7 @@ def get_max_duration(year: int, platform: str, duration_type: str):
     # Filtrar los datos según los parámetros recibidos
     filtered_df = movie_df.copy()
     if year:
-        filtered_df = filtered_df[filtered_df.Year["year"]== year]
+        filtered_df = filtered_df[filtered_df.Year["year"] == year]
     if platform:
         filtered_df = filtered_df[filtered_df.Platform["plataform"] == platform]
     if duration_type:
