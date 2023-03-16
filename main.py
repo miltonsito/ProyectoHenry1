@@ -17,7 +17,7 @@ async def read_root():
 '''
 @app.get("/get_word_count")
 async def get_word_count(plataforma: str, keyword: str):
-    movie_df=pd.read_csv('movies.csv')
+    movie_df=pd.read_csv('pelis_score.csv')
     #pasamos las entradas a minúsculas
     plataforma =plataforma.lower()
     keyword=keyword.lower()
