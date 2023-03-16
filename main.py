@@ -5,25 +5,31 @@ app = FastAPI(title="Películas y Series")
 
 @app.get("/")
 async def read_root():
-    return {"******* Hola, Mi nombre es Milton!! Este es mi Proyecto Nº 1 para Henry. ******"}
+    return {"message": "Hola, este es mi proyecto Nº 1 para Henry!"}
 
-# Película con mayor duración con filtros opcionales de AÑO, PLATAFORMA Y TIPO DE DURACIÓN
+
 @app.get("/get_max_duration")
-def get_max_duration(year: int, platform: str, duration_type: str):
-    movie_df = pd.read_csv('pelis_score.or.csv')
-    # Filtrar los datos según los parámetros recibidos
-    filtered_df = movie_df
-    if year:
-        filtered_df = filtered_df[filtered_df.Year == year]
-    if platform:
-        filtered_df = filtered_df[filtered_df.Platform == platform]
-    if duration_type:
-        filtered_df = filtered_df[filtered_df.Duration == duration_type]
+async def get_max_duration(year: int, platform: str, duration_type: str):
+    
+    import pandas as pd
+    data_plataformas = pd.read_csv('pelis_score.or.csv', sep=',')
 
-    # Encontrar la película con mayor duración en el dataframe filtrado
-    max_duration = filtered_df['duration_int'].max()
-    max_duration_movie = filtered_df[filtered_df['duration_int'] == max_duration].iloc[0]
+    # 1. Filtro por año
+    filtro_anio = data_plataformas.loc[ data_plataformas['year'] == year ]
 
-    # Devolver el título de la película con mayor duración y su duración
-    return {"title": max_duration_movie["title"], "duration_int": max_duration_movie["duration_int"]}
+    # 2. Filtro por plataforma
+    # a: amazon, d: disney, h: hulu, n: netflix
+    filtro_plataforma = filtro_anio.loc[ filtro_anio['Id'].str[0:1] == platform ]
+
+    # 3. Filtro por tipo de duracion
+    filtro_tipo_duracion = filtro_plataforma.loc[ filtro_plataforma['duration_type'] == duration_type ]
+
+    # 4. Filtro de mayor duracion
+    max_duracion = filtro_tipo_duracion.loc[ filtro_tipo_duracion['duration_int'] == filtro_tipo_duracion['duration_int'].max() ]
+    
+    movie_max_duracion = max_duracion['title']
+
+    return movie_max_duracion
+
+
 
